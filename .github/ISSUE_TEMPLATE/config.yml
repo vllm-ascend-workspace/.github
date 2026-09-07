@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Which repo does my change belong in?
+    url: https://github.com/vllm-ascend-workspace/.github/blob/main/CONTRIBUTING.md
+    about: Cross-repo routing table and the dependency direction rules.
+  - name: Architecture map
+    url: https://github.com/vllm-ascend-workspace/.github/blob/main/docs/architecture.md
+    about: Deployment units, the three flows, trust boundaries, and what is out of scope.
