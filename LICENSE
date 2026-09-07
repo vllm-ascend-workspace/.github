@@ -1,0 +1,18 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Qi Mao and the vllm-ascend-workspace contributors
+
+This repository contains documentation only — the organization profile, the
+architecture map, contribution routing, and issue and pull request templates. It
+is licensed under the Creative Commons Attribution 4.0 International License.
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate whether changes were made.
+
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary: https://creativecommons.org/licenses/by/4.0/
+
+Other repositories in this organization carry their own licenses. Code is
+generally MIT; the knowledge corpus in vaws-knowledge is CC BY 4.0 with its own
+contributor terms. Check each repository rather than assuming this one applies.
