@@ -14,11 +14,13 @@ know which unit owns what.
 | A domain workflow: serving, benchmark, memory/torch profiling, correctness, regression, graph / distributed / operator debug, Triton lifecycle, PD serving | the scaffold |
 | Parity / snapshot / materialize behavior, submodule handling, source-plane semantics | the scaffold |
 | Run Manifest v1 schema, experiment comparability rules | the scaffold |
-| A remote tool: read / write / edit / bash / glob / grep / ls / monitor / apply_patch / job / artifact — its semantics, result shape or SSH transport | `remote-dev` |
-| Endpoint resolution, path policy, read ledger, hook guards, the remote MCP server | `remote-dev` |
-| Task identity, runtime pool, attest/publish, managed job supervision, lease renewal, coordination messaging | `vaws-coordinator` |
-| Fleet collection, dashboard, history, the read-only agent query surface | `vaws-top` |
-| Knowledge schema, redaction rules, review bot, federation or lifecycle policy, corpus entries | `vaws-knowledge` |
+| A remote tool: read / write / edit / bash / glob / grep / ls / monitor / apply_patch / job / artifact — its semantics, result shape or SSH transport | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |
+| Endpoint resolution, path policy, read ledger, hook guards, the remote MCP server | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |
+| Workspace / session / alias discovery for those tools | the consuming repo's resolver plugin, not `remote-dev` |
+| Task identity, runtime pool, attest/publish, managed job supervision, lease renewal, coordination messaging | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) |
+| The local-first stdio `vaws_*` provider (separate from the loopback HTTP manager) | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) — [PR #2](https://github.com/vllm-ascend-workspace/vaws-coordinator/pull/2) was **open** on 2026-09-07, not on `main` |
+| Fleet collection, dashboard, history, the read-only agent query surface | [`vaws-top`](https://github.com/vllm-ascend-workspace/vaws-top) (private / access-limited) |
+| Knowledge schema, redaction rules, review bot, federation or lifecycle policy, corpus entries | [`vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) |
 | Org profile, architecture map, cross-repo routing, shared issue/PR templates | this repo (`.github`) |
 
 If a change looks like it belongs in two repos, it is usually one contract
@@ -36,7 +38,8 @@ Three rules follow, and none of them are negotiable by a single repo:
    private state.** No reading a consumer's untracked local state, no coordinator
    database, no session registry, no inventory lookup, no "if this looks like a
    VAWS worktree" special case. Everything it needs arrives as explicit endpoint
-   fields — `host`, `port`, `user`, `root`, `cwd`. If a consumer needs
+   fields — `host`, `port`, `user`, `root`, `cwd`. Workspace / session / alias
+   discovery belongs in the consumer resolver plugin. If a consumer needs
    `remote-dev` to behave differently, that is a new explicit parameter, not a
    lookup.
 2. **The coordinator consumes `remote-dev`, never the reverse.** The coordinator
@@ -45,13 +48,15 @@ Three rules follow, and none of them are negotiable by a single repo:
    about leases, bindings or executions.
 3. **`vaws-top` is downstream of everything and upstream of nothing.** It reads
    host state and reports it. It must not acquire, launch, allocate or mutate.
-   A PR that gives `vaws-top` a write path to a device, a container or a lease is
-   wrong regardless of how convenient it is.
+   A monitor is never authority to kill, lease, or release devices. A PR that
+   gives `vaws-top` a write path to a device, a container or a lease is wrong
+   regardless of how convenient it is.
 
-Today `vaws-top` also reads the scaffold's machine inventory and reuses its
-host-probing helpers. That is a real coupling in the current implementation, not
-a design intent — it is one of the things extraction has to turn into an explicit
-contract. Do not add new couplings in that direction while it is being resolved.
+The three service repositories exist as of 2026-09-07. Remaining coupling is
+injected configuration (inventory and host-pool file paths supplied by the
+consumer), not an in-tree import. Scaffold `main` still ships in-tree copies
+until the consumer PRs merge; do not add new couplings from a producer toward a
+consumer while that rewire is open.
 
 ## Sequencing a change that spans repos
 

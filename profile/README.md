@@ -6,16 +6,21 @@ else also wants.
 
 ## Which repo do I need?
 
-| I want to… | Repo | Status |
-|---|---|---|
-| Use the domain skills — serve, benchmark, profile, validate, debug an Ascend workload | [`vllm-ascend-workspace`](https://github.com/maoxx241/vllm-ascend-workspace) (the scaffold) | public today; **transfer into this org pending** |
-| Read or contribute a verified Ascend fact — failure signature, version compatibility, capability bound | [`vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) | contracts shipped; corpus empty; tooling not written |
-| Give an agent remote read/edit/bash/search/patch/job/artifact over SSH | `remote-dev` | **extraction in progress** — code lives in the scaffold at `.remote-dev/` |
-| Look at what the NPU fleet is actually doing right now | `vaws-top` | **extraction in progress** — code lives on the scaffold's `vaws-top` branch |
-| Get an exclusive NPU lease, a prepared runtime, or a supervised long job | `vaws-coordinator` | **extraction in progress** — code lives in the scaffold at `.agents/coordinator/` |
+Status checked **2026-09-07** against each repository's `main` and the cited
+PRs. A repository existing is not code merged; an open PR or a green check is
+not merged, deployed, or hardware-tested.
 
-Unlinked names are not yet published. Do not guess their URLs; follow the
-tracking issues in this repo.
+| I want to… | Repo | Status (2026-09-07) |
+|---|---|---|
+| Use the domain skills — serve, benchmark, profile, validate, debug an Ascend workload | [`vllm-ascend-workspace`](https://github.com/maoxx241/vllm-ascend-workspace) (the scaffold) | public; **org transfer pending**; consumer PRs [#84](https://github.com/maoxx241/vllm-ascend-workspace/pull/84), [#90](https://github.com/maoxx241/vllm-ascend-workspace/pull/90), [#91](https://github.com/maoxx241/vllm-ascend-workspace/pull/91), [#92](https://github.com/maoxx241/vllm-ascend-workspace/pull/92), [#95](https://github.com/maoxx241/vllm-ascend-workspace/pull/95) are **open** |
+| Read or contribute a verified Ascend fact — failure signature, version compatibility, capability bound | [`vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) | public; `tools/` `server/` `sync/` `conformance/` on main ([#1](https://github.com/vllm-ascend-workspace/vaws-knowledge/pull/1)–[#4](https://github.com/vllm-ascend-workspace/vaws-knowledge/pull/4) merged); review bot [#5](https://github.com/vllm-ascend-workspace/vaws-knowledge/pull/5) **open**; corpus empty |
+| Give an agent remote read/edit/bash/search/patch/job/artifact over SSH | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) | **exists** (private / access-limited); tool surface on its `main`; scaffold consumer [#90](https://github.com/maoxx241/vllm-ascend-workspace/pull/90) **open**; live SSH re-validation of the standalone tree **not claimed** |
+| Look at what the NPU fleet is actually doing right now | [`vaws-top`](https://github.com/vllm-ascend-workspace/vaws-top) | **exists** (private / access-limited); collection / dashboard / read-only MCP on its `main`; observation only — never an allocation authority |
+| Get an exclusive NPU lease, a prepared runtime, or a supervised long job | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) | public; loopback HTTP manager on `main`; stdio `vaws_*` provider [#2](https://github.com/vllm-ascend-workspace/vaws-coordinator/pull/2) **open**; hardware-level guarantees **not established** |
+
+Private links are the real repositories. Lack of public access is not
+nonexistence, and is not successful public verification. Commit SHAs and the
+merged / pending split: [architecture map](https://github.com/vllm-ascend-workspace/.github/blob/main/docs/architecture.md#what-is-actually-built).
 
 ## How they relate
 
@@ -32,7 +37,8 @@ the scaffold            domain skills + source plane; consumes all four below
   └─ vaws-knowledge     one-way: forks propose upward, verified flows downward
 ```
 
-`remote-dev` must never reach back into a consumer's private state. The
+`remote-dev` must never reach back into a consumer's private state. Workspace,
+session and alias discovery belong in the consumer's resolver plugin. The
 coordinator consumes `remote-dev`, never the reverse. See
 [CONTRIBUTING.md](https://github.com/vllm-ascend-workspace/.github/blob/main/CONTRIBUTING.md).
 
