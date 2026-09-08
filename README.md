@@ -5,7 +5,8 @@ Organization meta repository. It carries no code.
 | Path | What it is |
 |---|---|
 | `profile/README.md` | rendered as the [organization profile](https://github.com/vllm-ascend-workspace) — routing table first |
-| `docs/architecture.md` | the maintained architecture map: seven deployment units, the six-member organization inventory, two personal source-plane forks, the three flows, trust boundaries, authority rules, out of scope, the compact current-state map, and the dated historical evidence table |
+| `docs/architecture.md` | the maintained architecture map: seven deployment units, the three flows, trust boundaries, authority rules, out of scope |
+| `docs/source-map.md` | dated evidence ledger: current source SHAs, repository ids, and the historical built-state table |
 | `CONTRIBUTING.md` | cross-repo contribution routing and change sequencing |
 | `.github/ISSUE_TEMPLATE/`, `.github/PULL_REQUEST_TEMPLATE.md` | organization-wide defaults, used by repos that define none of their own |
 
