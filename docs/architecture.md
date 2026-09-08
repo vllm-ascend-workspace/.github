@@ -21,7 +21,7 @@ Current source state, exact commits and dated evidence: [source-map.md](source-m
 |---|---|---|---|
 | ① | Agent clients + integration | per-developer config from the scaffold bootstrap installer | developer machine |
 | ② | The scaffold (`vllm-ascend-workspace`) | one clone/fork per developer | developer machine |
-| ③ | `vaws-coordinator` | loopback HTTP MCP; separate stdio `vaws_*` provider | loopback or an SSH tunnel |
+| ③ | `vaws-coordinator` | loopback HTTP MCP; separate stdio `vaws_*` provider; owns the host NPU queue module | loopback or an SSH tunnel |
 | ④ | `remote-dev` | stdio MCP server + CLI fallbacks | developer machine, SSH outward |
 | ⑤ | `vaws-top` | loopback web UI + API, plus a read-only stdio MCP | developer machine or bastion |
 | ⑥ | `vaws-knowledge` | Git repo + knowledge MCP engine; review bot on `main` | GitHub, plus a local engine per consumer |
@@ -100,6 +100,7 @@ flowchart TB
   SKILL -- "B request resource" --> TASK
   TASK --> POOL
   POOL --> JOB
+  POOL -- "owns host-queue module (ships over SSH)" --> HOST
   JOB -- "B submit / preflight" --> HOST
   HOST -- "B lease activated → start gate opens" --> CTN
   CTN -- "B release re-verified<br/>(devices observed actually free)" --> HOST
@@ -150,7 +151,7 @@ A remote one-off command is zero-sync and must not go through parity. Editing af
 
 1. **Agent → coordinator.** A domain skill asks for a resource through `vaws_session` / `vaws_run`. Task identity is local; only remote work needs the manager.
 2. **Runtime pool checkout.** The coordinator returns an already-prepared exclusive binding with reserved ports. A cache miss waits; it does not provision, install or compile.
-3. **Host NPU authority.** The coordinator submits to the host queue. It does not allocate. The host holds the queue, the lease and the fence.
+3. **Host NPU authority.** The coordinator owns and versions the host-queue module (`host/vaws_npu_coordination.py`) and ships it over SSH; the module executes on the host. The coordinator submits to the host queue. It does not allocate. The host holds the queue, the lease and the fence.
 4. **Lease → start gate.** The manager prepares a waiting supervisor, verifies its host PID, activates the host lease, then opens the start gate.
 5. **Verified release.** Stop only the recorded process family. The host must observe every leased device free across repeated samples before reuse. Unknown ownership retains resources; a client timeout is never cleanup.
 
@@ -177,13 +178,17 @@ Forks propose upward; the main repo publishes downward. There is no merge algori
 | Public, unrecallable | ⑥'s PR entrance | Public Git history cannot be recalled. Redaction is a source-side gate; widening a schema object is a privacy decision. |
 | Secrets never in tracked files | all units | Tokens, inventories and monitor keys live in untracked local state, mode `0600` where applicable. `vaws-top` passes a bootstrap password on stdin for one request and stores it nowhere. |
 
+## Service contract
+
+Every provider repository (`remote-dev`, `vaws-coordinator`, `vaws-top`, `vaws-knowledge`) commits `service-api.json` `{"schema_version":1,"name":…,"service_api_version":N,"supports":[…]}` and advertises the same integer in the MCP `initialize` result under `capabilities.experimental[name].service_api_version`. The scaffold pins each provider by commit and declares an accepted `service_api` range. Pin drift warns; an incompatible API degrades that capability and names a remedy. Neither condition blocks local execution.
+
 ## Authority rules
 
 1. **The host NPU queue is the sole device-allocation authority.** It lives on each physical Ascend host and owns tasks, queue, fences, activation and release. The coordinator submits and waits; it does not allocate. The legacy session-local lease file is a compatibility mechanism, not a second allocator. A monitor never kills, leases, or releases devices.
 2. **`vaws-top` is observation-only and must never decide an allocation.** It is a read-only collector. Its "idle" answer is a cache with an age. An idle reading does not reserve a device.
 3. **An MCP fence is a cooperative mechanism, not an OS access-control boundary.** It cannot stop a process, and accepting a yield does not release a device. Coordination messages are untrusted text.
-4. **Contract ownership follows the unit.** The unit that defines a schema owns it. `remote-dev` owns the endpoint/result contract; the coordinator owns task and execution contracts; the scaffold owns Run Manifest v1; `vaws-knowledge` owns the knowledge schema. A consumer does not extend a producer's contract in its own repo.
-5. **Dependency direction is one-way.** `remote-dev` is stateless and accepts explicit endpoint fields only. Workspace / session / alias discovery belongs in the consumer resolver plugin. The coordinator consumes `remote-dev`, never the reverse.
+4. **Contract ownership follows the unit.** The unit that defines a schema owns it. `remote-dev` owns the endpoint/result contract; the coordinator owns task and execution contracts; the coordinator owns the host-queue protocol and module; the scaffold consumes it from the coordinator checkout; the scaffold owns Run Manifest v1; `vaws-knowledge` owns the knowledge schema. A consumer does not extend a producer's contract in its own repo.
+5. **Dependency direction is one-way.** `remote-dev` is stateless and accepts explicit endpoint fields only. Workspace / session / alias discovery belongs in the consumer resolver plugin. The coordinator consumes `remote-dev`, never the reverse. The scaffold consumes the coordinator; the coordinator does not import scaffold code at runtime.
 
 ## Out of scope
 
