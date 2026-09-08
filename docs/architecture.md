@@ -28,8 +28,7 @@ distinguish repository exists, code merged on `main`, PR pending, deployed
 service, and tested behavior. An open PR or a passing check is none of the
 last three. The dated 2026-09-07 "What is actually built" table remains
 historical evidence at its named old SHAs and is superseded by the current
-source map. This unpublished documentation candidate is not public
-`.github` `main`.
+source map.
 
 ## Deployment units
 
@@ -342,8 +341,7 @@ restoration. This compact map supersedes the dated 2026-09-07 snapshot
 below. The previous eight-organization-repository observation is historical
 and is not the current inventory. Source `main` SHA, scaffold dependency
 pin, accepted consumer wiring, installed runtime and hardware qualification
-remain distinct facts. This unpublished documentation candidate is not
-public `.github` `main` `fc6a1929`.
+remain distinct facts.
 
 Four organization repositories are public; `remote-dev` and `vaws-top`
 remain private. Private numeric ids below are retained from earlier verified
@@ -358,7 +356,7 @@ not extraction destinations, and not extra deployment units.
 | [`vllm-ascend-workspace/vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) | 1360026044 | public | `2e16e894e31a12d85a11117a2772031f30fdfebe` | task identity, runtime pool, managed worker; HTTP manager **and** stdio `vaws_*` provider on `main` |
 | [`vllm-ascend-workspace/vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) | 1359978527 | public | `1eac65cf2f8ff4f1451c788f0964005ea0dfdee2` (tree `1926b6204c2bdffeaa00fb1707fdf30927eeffb0`) | formal knowledge source; Stage 2 [#9](https://github.com/vllm-ascend-workspace/vaws-knowledge/pull/9) merged; deterministic review bot on `main` |
 | [`vllm-ascend-workspace/vaws-top`](https://github.com/vllm-ascend-workspace/vaws-top) | 1360023247 | private (numeric id dated) | `e13478484b9f52e8847169a785eebc32b268787f` | fleet monitoring; observation only; first-stage scaffold locator present; not a deployment claim |
-| [`vllm-ascend-workspace/.github`](https://github.com/vllm-ascend-workspace/.github) | 1360014025 | public | `fc6a1929fc13b2844f47012a1dec296daff09936` | organization landing metadata, not a provider; public `main` is this SHA, not an unpublished documentation candidate |
+| [`vllm-ascend-workspace/.github`](https://github.com/vllm-ascend-workspace/.github) | 1360014025 | public | `fc6a1929fc13b2844f47012a1dec296daff09936` | organization landing metadata, not a provider |
 
 Personal business source (outside the organization inventory):
 

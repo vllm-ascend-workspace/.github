@@ -12,8 +12,7 @@ refs (01:33:33–01:33:40 UTC), and the independently accepted personal-fork
 restoration. A repository existing is not code merged; an open PR or a
 green check is not merged, deployed, or hardware-tested. The organization
 has six repositories: four public, two private (`remote-dev` and
-`vaws-top`). Private numeric metadata remains explicitly dated. This
-unpublished documentation candidate is not public `.github` `main`.
+`vaws-top`). Private numeric metadata remains explicitly dated.
 
 The organization has six repositories and seven deployment units.
 Repository count is not runtime-unit count. Two personal public business
