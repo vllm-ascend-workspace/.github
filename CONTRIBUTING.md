@@ -13,8 +13,8 @@ know which unit owns what.
 |---|---|
 | A domain workflow: serving, benchmark, memory/torch profiling, correctness, regression, graph / distributed / operator debug, Triton lifecycle, PD serving | the scaffold |
 | Parity / snapshot / materialize behavior, submodule handling, source-plane semantics | the scaffold |
-| Organization development-fork work on vLLM (not a replacement community upstream) | [`vllm`](https://github.com/vllm-ascend-workspace/vllm) |
-| Organization development-fork work on vLLM-Ascend (not a replacement community upstream) | [`vllm-ascend`](https://github.com/vllm-ascend-workspace/vllm-ascend) |
+| Personal development-fork work on vLLM (outside the organization; not a replacement community upstream) | [`maoxx241/vllm`](https://github.com/maoxx241/vllm) |
+| Personal development-fork work on vLLM-Ascend (outside the organization; not a replacement community upstream) | [`maoxx241/vllm-ascend`](https://github.com/maoxx241/vllm-ascend) |
 | Run Manifest v1 schema, experiment comparability rules | the scaffold |
 | A remote tool: read / write / edit / bash / glob / grep / ls / monitor / apply_patch / job / artifact — its semantics, result shape or SSH transport | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |
 | Endpoint resolution, path policy, read ledger, hook guards, the remote MCP server | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |

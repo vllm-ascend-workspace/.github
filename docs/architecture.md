@@ -11,22 +11,25 @@ loose attachment. It is maintained here. Keep the fenced `mermaid` block below
 as the single source of the diagram — there is deliberately no second `.mmd`
 copy to drift out of sync.
 
-The organization has **eight repositories** and **seven deployment units**.
-Repository count is not runtime-unit count. The two public organization
-development forks live in the scaffold source plane; they are not extra
-services. `.github` is organization metadata, not a provider. Six
-repositories are public; `remote-dev` and `vaws-top` remain private. That
-visibility count is from fresh public metadata plus Root's authenticated
-All/no-filter eight-row organization inventory; private numeric metadata
-remains explicitly dated.
+The organization has **six repositories** and **seven deployment units**.
+Repository count is not runtime-unit count. Four organization repositories
+are public (scaffold, coordinator, knowledge, `.github`); `remote-dev` and
+`vaws-top` remain private. Two personal public development forks sit in the
+scaffold source plane **outside** that inventory; they are not extra
+services. `.github` is organization metadata, not a provider. That
+visibility count is from Root's authenticated All six-row organization
+inventory (~2026-09-08 01:30 UTC) plus fresh public metadata; private
+numeric metadata remains explicitly dated.
 
 Current deployment-unit rows, the diagram labels and the compact source map
-were checked on **2026-09-08** against the verified eight-repository identity
-map and the cited acceptance evidence. They distinguish repository exists,
-code merged on `main`, PR pending, deployed service, and tested behavior. An
-open PR or a passing check is none of the last three. The dated 2026-09-07
-"What is actually built" table remains historical evidence at its named old
-SHAs and is superseded by the current source map.
+were checked on **2026-09-08** against that six-member organization map, the
+two verified personal repositories, and the cited acceptance evidence. They
+distinguish repository exists, code merged on `main`, PR pending, deployed
+service, and tested behavior. An open PR or a passing check is none of the
+last three. The dated 2026-09-07 "What is actually built" table remains
+historical evidence at its named old SHAs and is superseded by the current
+source map. This unpublished documentation candidate is not public
+`.github` `main`.
 
 ## Deployment units
 
@@ -59,11 +62,11 @@ or machine.
 ```mermaid
 flowchart TB
 
-  subgraph ORG["Organization source map · 8 repositories, not 8 runtime units"]
+  subgraph ORG["Organization source map · 6 repositories, not 6 runtime units"]
     direction TB
-    ORG_PUB["public: scaffold · vllm fork · vllm-ascend fork · coordinator · knowledge · .github metadata"]
+    ORG_PUB["public: scaffold · coordinator · knowledge · .github metadata"]
     ORG_PRIV["private: remote-dev · vaws-top  —  numeric ids dated"]
-    ORG_NOTE[".github is metadata, not a provider  ·  business forks are source-plane, not services"]
+    ORG_NOTE[".github is metadata, not a provider  ·  personal business forks are outside this inventory"]
   end
 
   subgraph U1["① Agent clients · developer machine"]
@@ -75,7 +78,7 @@ flowchart TB
 
   subgraph U2["② the scaffold repo · one clone/fork per developer"]
     direction TB
-    SRC["Source plane<br/><small>org development forks vllm / vllm-ascend (not community upstreams)<br/>local worktrees → pinned parity snapshot → remote materialize</small>"]
+    SRC["Source plane<br/><small>personal development forks vllm / vllm-ascend (outside org inventory; not community upstreams)<br/>local worktrees → pinned parity snapshot → remote materialize</small>"]
     SKILL["Domain skills<br/><small>attach · sync · run · measure · judge · diagnose · capture</small>"]
     ORCH["Orchestrator skills<br/><small>triton-workflow · change-validation · pd-serving · multinode</small>"]
     CONTRACT["Contracts<br/><small>run-manifest-v1 · knowledge-v1/v2<br/>endpoint / result schema</small>"]
@@ -191,12 +194,12 @@ in a new process, and the flow exists to make that cheap and unambiguous.
 
 1. **Local worktree.** Edits happen on the developer machine, across the
    scaffold and its `vllm` / `vllm-ascend` submodule worktrees. The
-   organization development forks
-   [`vllm-ascend-workspace/vllm`](https://github.com/vllm-ascend-workspace/vllm)
+   personal development forks
+   [`maoxx241/vllm`](https://github.com/maoxx241/vllm)
    and
-   [`vllm-ascend-workspace/vllm-ascend`](https://github.com/vllm-ascend-workspace/vllm-ascend)
-   sit in this source plane; they are not replacement community upstreams
-   and not extra deployment units.
+   [`maoxx241/vllm-ascend`](https://github.com/maoxx241/vllm-ascend)
+   sit in this source plane **outside** the organization inventory; they
+   are not replacement community upstreams and not extra deployment units.
 2. **Pinned snapshot.** Parity turns the working tree — *including uncommitted
    edits* — into a synthetic commit and publishes the Git objects into a
    container-local cache. Content is hashed, so a later edit to the same dirty
@@ -332,28 +335,37 @@ repos, because each repo will look locally correct while breaking one.
 
 ## Current source map
 
-Checked **2026-09-08** against the verified eight-repository identity/ref map
-and the cited acceptance evidence. This compact map supersedes the dated
-2026-09-07 snapshot below. Source `main` SHA, scaffold dependency pin,
-accepted consumer wiring, installed runtime and hardware qualification remain
-distinct facts.
+Checked **2026-09-08** against Root's authenticated All six-row organization
+inventory (~01:30 UTC), fresh public metadata and HEAD/main refs
+(01:33:33–01:33:40 UTC), and the independently accepted personal-fork
+restoration. This compact map supersedes the dated 2026-09-07 snapshot
+below. The previous eight-organization-repository observation is historical
+and is not the current inventory. Source `main` SHA, scaffold dependency
+pin, accepted consumer wiring, installed runtime and hardware qualification
+remain distinct facts. This unpublished documentation candidate is not
+public `.github` `main` `fc6a1929`.
 
-Six repositories are public; `remote-dev` and `vaws-top` remain private.
-Private numeric ids below are retained from earlier verified metadata; they
-were not freshly re-read through a private API. The two business forks are
-organization development forks, not replacement community upstreams, and not
-extra deployment units.
+Four organization repositories are public; `remote-dev` and `vaws-top`
+remain private. Private numeric ids below are retained from earlier verified
+metadata; they were not freshly re-read through a private API. Personal
+business forks are listed separately; they are not organization members,
+not extraction destinations, and not extra deployment units.
 
 | Repository | id | Visibility | Current `main` | Current role |
 |---|---:|---|---|---|
 | [`vllm-ascend-workspace/vllm-ascend-workspace`](https://github.com/vllm-ascend-workspace/vllm-ascend-workspace) | 1196723340 | public, non-fork | `7af4ac3106649d2dbbed712c780a14db8bf25113` (tree `16f1073cc0df27354cabd100c4b9196ec99a756c`) | scaffold: domain skills + source plane; consumes remote-dev, coordinator, and the first-stage vaws-top locator; boundary baseline accepted rows: **zero** |
-| [`vllm-ascend-workspace/vllm`](https://github.com/vllm-ascend-workspace/vllm) | 1009465986 | public fork | `a435e3108d82eb96d9b3954c1935afbbf4c5f69b` | organization development fork of [`vllm-project/vllm`](https://github.com/vllm-project/vllm) (id 599547518); **not** a replacement community upstream |
-| [`vllm-ascend-workspace/vllm-ascend`](https://github.com/vllm-ascend-workspace/vllm-ascend) | 924147541 | public fork | `d52c1b8de956507e6ace7ba351a998ed5cee6ce5` | organization development fork of [`vllm-project/vllm-ascend`](https://github.com/vllm-project/vllm-ascend) (id 924058625); **not** a replacement community upstream |
 | [`vllm-ascend-workspace/remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) | 1360023179 | private (numeric id dated) | `b6acc21d147e369e771f1ff916973d74d667691e` | transport and explicit endpoints; scaffold consumer on accepted `main`; issues [#1](https://github.com/vllm-ascend-workspace/remote-dev/issues/1) and [#2](https://github.com/vllm-ascend-workspace/remote-dev/issues/2) **open** |
 | [`vllm-ascend-workspace/vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) | 1360026044 | public | `2e16e894e31a12d85a11117a2772031f30fdfebe` | task identity, runtime pool, managed worker; HTTP manager **and** stdio `vaws_*` provider on `main` |
 | [`vllm-ascend-workspace/vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) | 1359978527 | public | `1eac65cf2f8ff4f1451c788f0964005ea0dfdee2` (tree `1926b6204c2bdffeaa00fb1707fdf30927eeffb0`) | formal knowledge source; Stage 2 [#9](https://github.com/vllm-ascend-workspace/vaws-knowledge/pull/9) merged; deterministic review bot on `main` |
 | [`vllm-ascend-workspace/vaws-top`](https://github.com/vllm-ascend-workspace/vaws-top) | 1360023247 | private (numeric id dated) | `e13478484b9f52e8847169a785eebc32b268787f` | fleet monitoring; observation only; first-stage scaffold locator present; not a deployment claim |
-| [`vllm-ascend-workspace/.github`](https://github.com/vllm-ascend-workspace/.github) | 1360014025 | public | this metadata repository | organization landing metadata, not a provider |
+| [`vllm-ascend-workspace/.github`](https://github.com/vllm-ascend-workspace/.github) | 1360014025 | public | `fc6a1929fc13b2844f47012a1dec296daff09936` | organization landing metadata, not a provider; public `main` is this SHA, not an unpublished documentation candidate |
+
+Personal business source (outside the organization inventory):
+
+| Repository | id | Visibility | Current `main` | Current role |
+|---|---:|---|---|---|
+| [`maoxx241/vllm`](https://github.com/maoxx241/vllm) | 1009465986 | public fork | `a435e3108d82eb96d9b3954c1935afbbf4c5f69b` | personal development fork of [`vllm-project/vllm`](https://github.com/vllm-project/vllm) (id 599547518); **not** a replacement community upstream; source-plane under the scaffold flow |
+| [`maoxx241/vllm-ascend`](https://github.com/maoxx241/vllm-ascend) | 924147541 | public fork | `d52c1b8de956507e6ace7ba351a998ed5cee6ce5` | personal development fork of [`vllm-project/vllm-ascend`](https://github.com/vllm-project/vllm-ascend) (id 924058625); **not** a replacement community upstream; source-plane under the scaffold flow |
 
 Current operational and consumer labels, not a rewrite of the historical
 table:
