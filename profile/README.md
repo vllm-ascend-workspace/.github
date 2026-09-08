@@ -40,8 +40,8 @@ services.
 
 Private links are the real repositories. Lack of public access is not
 nonexistence, and is not successful public verification. Current SHAs,
-consumer wiring and operational limits: [current source map](https://github.com/vllm-ascend-workspace/.github/blob/main/docs/architecture.md#current-source-map).
-The dated 2026-09-07 evidence table is retained as [historical snapshot](https://github.com/vllm-ascend-workspace/.github/blob/main/docs/architecture.md#what-is-actually-built).
+consumer wiring and operational limits: [current source map](https://github.com/vllm-ascend-workspace/.github/blob/main/docs/source-map.md#current-source-map).
+The dated 2026-09-07 evidence table is retained as [historical snapshot](https://github.com/vllm-ascend-workspace/.github/blob/main/docs/source-map.md#what-is-actually-built).
 
 ## How they relate
 
