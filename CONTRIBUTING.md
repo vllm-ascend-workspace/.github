@@ -13,12 +13,14 @@ know which unit owns what.
 |---|---|
 | A domain workflow: serving, benchmark, memory/torch profiling, correctness, regression, graph / distributed / operator debug, Triton lifecycle, PD serving | the scaffold |
 | Parity / snapshot / materialize behavior, submodule handling, source-plane semantics | the scaffold |
+| Personal development-fork work on vLLM (outside the organization; not a replacement community upstream) | [`maoxx241/vllm`](https://github.com/maoxx241/vllm) |
+| Personal development-fork work on vLLM-Ascend (outside the organization; not a replacement community upstream) | [`maoxx241/vllm-ascend`](https://github.com/maoxx241/vllm-ascend) |
 | Run Manifest v1 schema, experiment comparability rules | the scaffold |
 | A remote tool: read / write / edit / bash / glob / grep / ls / monitor / apply_patch / job / artifact — its semantics, result shape or SSH transport | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |
 | Endpoint resolution, path policy, read ledger, hook guards, the remote MCP server | [`remote-dev`](https://github.com/vllm-ascend-workspace/remote-dev) (private / access-limited) |
 | Workspace / session / alias discovery for those tools | the consuming repo's resolver plugin, not `remote-dev` |
 | Task identity, runtime pool, attest/publish, managed job supervision, lease renewal, coordination messaging | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) |
-| The local-first stdio `vaws_*` provider (separate from the loopback HTTP manager) | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) — [PR #2](https://github.com/vllm-ascend-workspace/vaws-coordinator/pull/2) was **open** on 2026-09-07, not on `main` |
+| The local-first stdio `vaws_*` provider (separate from the loopback HTTP manager) | [`vaws-coordinator`](https://github.com/vllm-ascend-workspace/vaws-coordinator) — on accepted `main` `2e16e894` ([PR #2](https://github.com/vllm-ascend-workspace/vaws-coordinator/pull/2) merged) |
 | Fleet collection, dashboard, history, the read-only agent query surface | [`vaws-top`](https://github.com/vllm-ascend-workspace/vaws-top) (private / access-limited) |
 | Knowledge schema, redaction rules, review bot, federation or lifecycle policy, corpus entries | [`vaws-knowledge`](https://github.com/vllm-ascend-workspace/vaws-knowledge) |
 | Org profile, architecture map, cross-repo routing, shared issue/PR templates | this repo (`.github`) |
@@ -52,11 +54,12 @@ Three rules follow, and none of them are negotiable by a single repo:
    gives `vaws-top` a write path to a device, a container or a lease is wrong
    regardless of how convenient it is.
 
-The three service repositories exist as of 2026-09-07. Remaining coupling is
-injected configuration (inventory and host-pool file paths supplied by the
-consumer), not an in-tree import. Scaffold `main` still ships in-tree copies
-until the consumer PRs merge; do not add new couplings from a producer toward a
-consumer while that rewire is open.
+The four extracted source repositories exist. Remaining coupling is injected
+configuration (inventory and host-pool file paths supplied by the consumer),
+not an in-tree import. Accepted scaffold `main` consumes remote-dev, the
+coordinator, and the first-stage vaws-top locator through pins and locators;
+it does not ship in-tree copies of those units. Do not add new couplings from
+a producer toward a consumer.
 
 ## Sequencing a change that spans repos
 
